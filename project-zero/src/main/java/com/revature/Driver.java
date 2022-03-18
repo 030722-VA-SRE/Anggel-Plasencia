@@ -42,6 +42,8 @@ public class Driver {
 			Comics comics = cs.getById(id);
 			ctx.json(comics);
 			ctx.status(200);	
+			
+			// if specified id is not found, throw exception with specified id and tell the user to try again 
 			}catch (ItemNotFoundException e){
 			
 				ctx.status(404);
