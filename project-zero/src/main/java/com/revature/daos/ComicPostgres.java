@@ -85,4 +85,40 @@ public class ComicPostgres implements ComicDao{
 
 
 
+
+	@Override
+	public Comics getComicByGenre(String genre) {
+		
+		String sql = "select * from comics where to_tsvector(genre) @@ to_tsquery('');";
+		Comics comics = null;
+		/*
+		 * connection to the db from the ConnectionUtil package  
+		 */
+		  try (Connection c = ConnectionUtil.getConnectionEnv()){
+			  
+			// Using the connection established above, we create a prepared statement  
+			//PreparedStatement ps = c.prepareStatement(sql);
+			  Statement s = c.createStatement();
+			// setting the sql statement above with the genre that the user is looking for
+			//ps.setString(1, genre);
+			
+			// executes the query from the prepared statement and assigns the query result to ResultSet  
+			ResultSet rs = s.executeQuery(sql);
+			
+			while(rs.next()) {
+				comics = new Comics();
+				comics.setId(rs.getInt("id"));
+				comics.setComic(rs.getString("comic"));
+				comics.setDescription(rs.getString("description"));
+				comics.setGenre(rs.getString("genre"));
+				comics.setPrice(rs.getDouble("price"));
+			}	
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		} 
+		// if comic with the given genre is found then return that comic, if not then return null
+		return comics;
+	}
+
 }

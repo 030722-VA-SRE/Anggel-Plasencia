@@ -22,8 +22,8 @@ public class ComicServices {
 		
 		return cd.getAllComics();
 		
-		
 	}
+	
 	
 	//gets the comic id, if the comic's id is not found; throws exception
 	public Comics getById(int id) throws ItemNotFoundException {
@@ -35,6 +35,18 @@ public class ComicServices {
 		return comics;
 		
 	}
+	
+	//gets the comic genre, if the comic's genre is not found; throws exception
+		public Comics getByGenre(String genre) throws ItemNotFoundException {
+			Comics comics = cd.getComicByGenre(genre);
+			
+			if(comics == null) {
+				throw new ItemNotFoundException();
+			}
+			return comics;
+			
+		}
+	
 	
 	
 }

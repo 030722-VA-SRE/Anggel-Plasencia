@@ -8,5 +8,6 @@ public interface ComicDao {
 	
 	public List<Comics> getAllComics();
 	public Comics getComicById(int id);
+	public Comics getComicByGenre(String genre);
 
 }
