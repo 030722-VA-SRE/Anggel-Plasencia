@@ -8,7 +8,7 @@ price numeric(7,2) not null
 );
 
 
-select * from comics where to_tsvector(genre) @@ to_tsquery('Fijian');
+--select * from comics where to_tsvector(genre) @@ to_tsquery('Fijian');
 
 --purchase_id integer references users(user_id)
 --insert into comics(comic_name) values ('spiderman');
