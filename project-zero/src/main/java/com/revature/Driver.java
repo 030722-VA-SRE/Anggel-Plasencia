@@ -1,11 +1,15 @@
 package com.revature;
 
 import static io.javalin.apibuilder.ApiBuilder.delete;
+
 import static io.javalin.apibuilder.ApiBuilder.get;
 import static io.javalin.apibuilder.ApiBuilder.path;
 import static io.javalin.apibuilder.ApiBuilder.post;
 import static io.javalin.apibuilder.ApiBuilder.put;
 
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import com.revature.Controllers.ComicController;
 import com.revature.exceptions.ItemNotFoundException;
 import com.revature.models.Comics;
@@ -17,8 +21,8 @@ public class Driver {
 
 	public static void main(String[] args) {
 
-		// Allows Sriver to interact with item service class
-		ComicServices cs = new ComicServices();
+		// Allows Driver to interact with item service class
+		//ComicServices cs = new ComicServices();
 
 		// Javalin endpoint and code to handle the endpoints
 		Javalin app = Javalin.create(config -> {
