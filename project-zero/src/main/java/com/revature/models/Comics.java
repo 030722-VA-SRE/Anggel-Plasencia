@@ -17,10 +17,10 @@ public class Comics {
 		super();
 	}
 
-//	public Comics(int id, String comicomic, String description, String genre, boolean inStock) {
-//		this();
-//
-//	}
+	public Comics(int id, String comic, String description, String genre, boolean inStock) {
+		this();
+
+	}
 
 //	public boolean isInStock() {
 //		return inStock;
