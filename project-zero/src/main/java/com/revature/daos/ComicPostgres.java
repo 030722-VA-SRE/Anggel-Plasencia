@@ -6,9 +6,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import com.revature.models.Comics;
-import com.revature.models.User;
 import com.revature.util.ConnectionUtil;
 
 
@@ -139,7 +139,7 @@ public class ComicPostgres implements ComicDao{
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
+		
 		return false;
 	}
 
@@ -160,6 +160,7 @@ public class ComicPostgres implements ComicDao{
 			
 		}catch (SQLException e) {
 			e.printStackTrace();
+			
 		}
 		return false;
 		

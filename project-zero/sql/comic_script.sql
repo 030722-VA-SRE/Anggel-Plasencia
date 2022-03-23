@@ -1,10 +1,10 @@
 Drop table if exists comics;
 create table if not exists comics(
 id serial primary key,
-comic varchar(30) unique not null,
+comic varchar(30) not null,
 description text,
 genre varchar(20) not null,
-price numeric(7,2) not null
+price numeric(7,2) 
 );
 
 
@@ -26,8 +26,8 @@ price numeric(7,2) not null
 
 		
 
-insert into comics (id, comic, description, genre, price) values (1, 'Arabele', 'background', 'Maltese', '8705.91');
-insert into comics (id, comic, description, genre, price) values (2, 'Paolo', 'Multi-layered', 'Fijian', '5842.87');
-insert into comics (id, comic, description, genre, price) values (3, 'Ebony', 'Phased', 'West Frisian', '3653.27');
-insert into comics (id, comic, description, genre, price) values (4, 'Aldrich', 'Networked', 'Fijian', '7962.60');
-insert into comics (id, comic, description, genre, price) values (5, 'Zachary', 'Visionary', 'Luxembourgish', '9403.53');
+insert into comics (id, comic, description, genre, price) values (1, 'Batman', 'fighting crime in a dark city', 'action', '705');
+insert into comics (id, comic, description, genre, price) values (2, 'Berserk', 'former mercenary', 'darkfantasy', '24');
+insert into comics (id, comic, description, genre, price) values (3, 'Vagabond', 'wandering fighter', 'action', '36');
+insert into comics (id, comic, description, genre, price) values (4, 'Spiderman', 'witty superhero', 'comedy', '79');
+insert into comics (id, comic, description, genre, price) values (5, 'MadeinAbyss', 'the abyss', 'exploration', '94');

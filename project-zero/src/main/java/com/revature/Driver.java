@@ -8,8 +8,7 @@ import static io.javalin.apibuilder.ApiBuilder.post;
 import static io.javalin.apibuilder.ApiBuilder.put;
 
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
 import com.revature.Controllers.ComicController;
 import com.revature.exceptions.ItemNotFoundException;
 import com.revature.models.Comics;

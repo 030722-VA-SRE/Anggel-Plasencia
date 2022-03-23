@@ -17,9 +17,9 @@ public class Comics {
 		super();
 	}
 
-	public Comics(int id, String comic, String description, String genre, boolean inStock) {
+	public Comics(int id, String comic, String description, String genre, int price, boolean inStock) {
 		this();
-
+		
 	}
 
 //	public boolean isInStock() {
@@ -29,6 +29,17 @@ public class Comics {
 //	public void setInStock(boolean inStock) {
 //		this.inStock = inStock;
 //	}
+
+	// for testing
+	public Comics(int id, String comic, String description, String genre, double price) {
+		super();
+		this.id = id;
+		this.comic = comic;
+		this.description = description;
+		this.genre = genre;
+		this.price = price;
+		
+	}
 
 	public int getId() {
 		return id;

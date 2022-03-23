@@ -3,6 +3,8 @@ package com.revature.Controllers;
 import java.util.List;
 import org.eclipse.jetty.http.HttpStatus;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import com.revature.daos.ComicDao;
 import com.revature.exceptions.ItemNotFoundException;
 import com.revature.models.Comics;
@@ -13,6 +15,7 @@ import io.javalin.http.Context;
 public class ComicController {
 
 	private static ComicServices cs = new ComicServices();
+	private static Logger log = LogManager.getRootLogger();
 
 	public static void getAllComics(Context ctx) {
 		
@@ -51,6 +54,7 @@ public class ComicController {
 				ctx.status(404);
 				ctx.result("Could not find by genre: " + genre);
 				e.printStackTrace();
+				
 			}
 
 		} 
@@ -82,10 +86,10 @@ public class ComicController {
 
 			ctx.status(404);
 			ctx.result("Unable to find comic of id " + comicId + ".");
-
-			// logging
-
 			e.printStackTrace();
+			log.error("Unable to find comic of id: " + comicId);
+			log.error("Exception was thrown: "+ e.fillInStackTrace());
+			
 		}
 
 	}// end of getbyId
@@ -95,16 +99,17 @@ public class ComicController {
 		Comics newComic = ctx.bodyAsClass(Comics.class);
 
 		// ctx.json(newComic);
-
+		
 		if (cs.addComic(newComic)) {
 
-			ctx.status(HttpStatus.CREATED_201);
+			ctx.status(201);
 			ctx.result("New comic was created!");
-
+			log.info("User created a new comic: " + newComic);
 		} else {
 
 			ctx.status(400);
 			ctx.result("Comic was unable to be created.");
+			log.error("Comic "+ newComic +" was unable to be created!");
 		}
 	}// end of add comic
 
@@ -123,6 +128,7 @@ public class ComicController {
 		} else {
 			ctx.status(400);
 			ctx.result("Unable to update comic of id: " + id);
+			log.info("Unable to update comic of id: " + id);
 		}
 
 	}// end of updateComic
@@ -135,10 +141,11 @@ public class ComicController {
 
 			ctx.status(200);
 			ctx.result("Successfully deleted comic of id: " + id);
-
+			log.info("Successfully deleted comic of id: " + id);
 		} else {
 			ctx.status(400);
 			ctx.result("Unable to delete comic of id: " + id);
+			log.info("Unable to delete comic of id: " + id);
 		}
 
 	}// end of delete Comic

@@ -10,16 +10,20 @@ import com.revature.models.Comics;
 public class ComicServices {
 
 	private ComicDao cd;
-	
+
 	public ComicServices() {
-		
+		cd = new ComicPostgres();
+
+	}
+
+	public ComicServices(ComicDao testDao) {
+
 		cd = new ComicPostgres();
 	}
 
 	public List<Comics> getAllComics() {
-
+		
 		return cd.getAllComics();
-
 	}
 
 	// gets the comic id, if the comic's id is not found; throws exception
@@ -35,12 +39,10 @@ public class ComicServices {
 
 	public boolean addComic(Comics comic) throws ItemNotFoundException {
 
-		int generatedId = cd.addComic(comic);
+		 cd.addComic(comic);
 
-		if (generatedId != -1) {
-			return true;
-		}
-		return false;
+		
+		return true;
 	}
 
 	public boolean updateComic(Comics comic) throws ItemNotFoundException {
@@ -55,7 +57,7 @@ public class ComicServices {
 	}
 
 	public boolean deleteComic(int id) throws ItemNotFoundException {
-		
+
 		boolean cDelete = cd.deleteComic(id);
 
 		if (!cDelete) {
@@ -66,30 +68,30 @@ public class ComicServices {
 
 	}
 
-	//gets the comic genre, if the comic's genre is not found; throws exception
-		public List<Comics> getByGenre(String genre) throws ItemNotFoundException {
-			List<Comics> gen = cd.getByGenre(genre);
-			
-			if(gen == null) {
-				throw new ItemNotFoundException();
-			}
-			return gen;
-			
+	// gets the comic genre, if the comic's genre is not found; throws exception
+	public List<Comics> getByGenre(String genre) throws ItemNotFoundException {
+		List<Comics> gen = cd.getByGenre(genre);
+
+		if (gen == null) {
+			throw new ItemNotFoundException();
 		}
-		
-		public List<Comics> getByComicName(String comic) throws ItemNotFoundException {
-			List<Comics> com = cd.getByComicName(comic);
-			
-			if(com == null) {
-				throw new ItemNotFoundException();
-			}
-			return com;
-			
+		return gen;
+
+	}
+
+	public List<Comics> getByComicName(String comic) throws ItemNotFoundException {
+		List<Comics> com = cd.getByComicName(comic);
+
+		if (com == null) {
+			throw new ItemNotFoundException();
 		}
-		
-		public List<Comics> getByComicAndGenre(String comic, String genre){
-			
-			return cd.getByComicAndGenre(comic, genre);
-		}
+		return com;
+
+	}
+
+	public List<Comics> getByComicAndGenre(String comic, String genre) {
+
+		return cd.getByComicAndGenre(comic, genre);
+	}
 
 }// End of CS
