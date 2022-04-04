@@ -24,6 +24,8 @@ public class AuthController {
 	
 	@PostMapping
 	public ResponseEntity<User> login(@RequestParam("username") String username,@RequestParam("password") String password){
+		
+		
 		return null;
 		
 	}
