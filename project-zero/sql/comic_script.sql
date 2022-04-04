@@ -7,6 +7,11 @@ genre varchar(20) not null,
 price numeric(7,2) 
 );
 
+insert into users (username, password, role) values ('david', 'pass4', 'ADMIN');
+insert into users (username, password, role) values ('jay', 'pass3', 'USER');
+insert into users (username, password, role) values ('dylan', 'pass2', 'USER');
+insert into users (username, password, role) values ('angel', 'pass1', 'ADMIN');
+
 
 --select * from comics where to_tsvector(genre) @@ to_tsquery('Fijian');
 
