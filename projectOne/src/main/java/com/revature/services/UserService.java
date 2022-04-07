@@ -1,7 +1,10 @@
 package com.revature.services;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,6 +13,7 @@ import com.revature.dtos.UserDTO;
 import com.revature.exceptions.UserExistsException;
 import com.revature.exceptions.UserNotFoundException;
 import com.revature.models.User;
+import com.revature.models.UserRoles;
 import com.revature.repositories.ComicRepository;
 import com.revature.repositories.UserRepository;
 
@@ -17,18 +21,22 @@ import com.revature.repositories.UserRepository;
 public class UserService {
 
 	private UserRepository ur;
-	private ComicRepository cr;
+	private static Logger LOG = LoggerFactory.getLogger(UserService.class);
 
 	@Autowired
-	public UserService(UserRepository ur, ComicRepository cr) {
+	public UserService(UserRepository ur) {
 		super();
 		this.ur = ur;
-		this.cr = cr;
 	}
 
-	public List<User> getAllUsers() {
+	public List<UserDTO> getAllUsers() {
 
-		return ur.findAll();
+		List<User> users = ur.findAll();
+
+		List<UserDTO> uDTO = users.stream().map(UserDTO::new).collect(Collectors.toList());
+
+		return uDTO;
+
 	}
 
 	public UserDTO getUserById(int id) {
@@ -38,32 +46,34 @@ public class UserService {
 		return new UserDTO(user);
 	}
 
-//	public User getUserByRole(UserRoles role) {
-//
-//		return ur.findUserByRole(role);
-//	}
-
 	@Transactional
-	public User createUser(User newUser) throws UserExistsException {
+	public User createUser(User user) throws UserNotFoundException {
 
-		User usr = ur.findByUsername(newUser.getUsername());
-
+		User usr = ur.findByUsername(user.getUsername());
 		if (usr != null) {
-
-			return ur.save(newUser);
+			return ur.save(user);
 		}
-
-		return null;
+		throw new UserNotFoundException();
 	}
-	
+
 	@Transactional
-	public void deleteUser(int id) throws UserNotFoundException {
+	public User updateUser(int id, User user) throws UserNotFoundException {
 
-		getUserById(id);
-		
+		User usr = ur.findById(id).orElseThrow(UserNotFoundException::new);
+
+		user.setId(usr.getId());
+
+		return ur.save(user);
+	}
+
+	@Transactional
+	public boolean deleteUser(int id) throws UserNotFoundException {
+
+		ur.getById(id);
+
 		ur.deleteById(id);
+		return true;
 
 	}
 
-	
-}//end of class
+}// end of class

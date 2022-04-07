@@ -21,6 +21,7 @@ public class UserDTO {
 		super();
 		id = user.getId();
 		username = user.getUsername();
+		
 	}
 
 	

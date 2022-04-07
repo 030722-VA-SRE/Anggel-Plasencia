@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.revature.dtos.UserDTO;
 import com.revature.models.User;
 import com.revature.services.UserService;
 
@@ -28,7 +30,7 @@ public class UserController {
 	}
 
 	@GetMapping
-	public ResponseEntity<List<User>> getAllUsers(String username) {
+	public ResponseEntity<List<UserDTO>> getAllUsers(String username) {
 
 		return new ResponseEntity<>(us.getAllUsers(), HttpStatus.OK);
 	}
@@ -37,25 +39,28 @@ public class UserController {
 	public ResponseEntity<String> createUser(@RequestBody User user) {
 
 		us.createUser(user);
-		return new ResponseEntity<>("User " + user + " was created!", HttpStatus.CREATED);
+		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 
-	@GetMapping("{id}")
-	public ResponseEntity<String> getUserById(@RequestBody int id) {
+	@GetMapping("/{id}")
+	public ResponseEntity<UserDTO> getUserById(@PathVariable("id") int id) {
 
-		return new ResponseEntity<>("User of id" + id + " was found!", HttpStatus.OK);
+		return new ResponseEntity<>(us.getUserById(id), HttpStatus.OK);
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<String> updateUser(@RequestBody User user, @PathVariable("id") int id) {
+	public ResponseEntity<User> updateUser(@RequestBody User user, @PathVariable("id") int id) {
 
-		return new ResponseEntity<>("User of id: " + id + " and name: " + user + " was updated!", HttpStatus.OK);
+		return new ResponseEntity<>(us.updateUser(id, user), HttpStatus.OK);
+		
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<String> deleteUser(@PathVariable("id") int id) {
+	public ResponseEntity<User> deleteUser(@PathVariable("id") int id) {
 
-		return null;
+		
+		us.deleteUser(id);
+		return new ResponseEntity<>(HttpStatus.OK);
 
 	}
 	

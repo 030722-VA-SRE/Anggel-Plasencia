@@ -19,19 +19,30 @@ public class Comics {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	@Column(nullable = false)
-	private String comic;
+	private String name;
 	private String description;
 	private String genre;
-	private double price;
+	private String type;
+	private int price;
 	@ManyToOne
 	@JoinColumn(name = "purchaser_id")
 	private User purchaserId;
 
 	
-	
 	public Comics() {
 		super();
 		
+	}
+
+	public Comics(int id, String name, String description, String genre, String type, int price, User purchaserId) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.description = description;
+		this.genre = genre;
+		this.type = type;
+		this.price = price;
+		this.purchaserId = purchaserId;
 	}
 
 
@@ -45,13 +56,23 @@ public class Comics {
 	}
 
 
-	public String getComic() {
-		return comic;
+	public String getName() {
+		return name;
 	}
 
 
-	public void setComic(String comic) {
-		this.comic = comic;
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
+	public String getType() {
+		return type;
+	}
+
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 
@@ -64,8 +85,6 @@ public class Comics {
 		this.description = description;
 	}
 
-
-	
 
 	public String getGenre() {
 		return genre;
@@ -82,7 +101,7 @@ public class Comics {
 	}
 
 
-	public void setPrice(double price) {
+	public void setPrice(int price) {
 		this.price = price;
 	}
 
@@ -99,7 +118,7 @@ public class Comics {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(comic, description, genre, id, price, purchaserId);
+		return Objects.hash(description, genre, id, name, price, purchaserId, type);
 	}
 
 
@@ -112,19 +131,18 @@ public class Comics {
 		if (getClass() != obj.getClass())
 			return false;
 		Comics other = (Comics) obj;
-		return Objects.equals(comic, other.comic) && Objects.equals(description, other.description)
-				&& Objects.equals(genre, other.genre) && id == other.id
+		return Objects.equals(description, other.description) && Objects.equals(genre, other.genre) && id == other.id
+				&& Objects.equals(name, other.name)
 				&& Double.doubleToLongBits(price) == Double.doubleToLongBits(other.price)
-				&& Objects.equals(purchaserId, other.purchaserId);
+				&& Objects.equals(purchaserId, other.purchaserId) && Objects.equals(type, other.type);
 	}
 
 
 	@Override
 	public String toString() {
-		return "Comic [id=" + id + ", comic=" + comic + ", description=" + description + ", genre=" + genre + ", price="
-				+ price + ", purchaserId=" + purchaserId + "]";
+		return "Comics [id=" + id + ", name=" + name + ", description=" + description + ", genre=" + genre + ", type="
+				+ type + ", price=" + price + ", purchaserId=" + purchaserId + "]";
 	}
-
 
 
 	

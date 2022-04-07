@@ -18,10 +18,14 @@ public class User {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
+	
 	@Column(unique = true, nullable = false)
 	private String username;
+	
 	@Column(nullable = false)
 	private String password;
+	
+//	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
 	private UserRoles roles;
 	
@@ -67,10 +71,10 @@ public class User {
 	public void setRoles(UserRoles roles) {
 		this.roles = roles;
 	}
-
+	
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, password, roles, username);
+		return Objects.hash(id, password, username);
 	}
 
 	@Override
@@ -82,15 +86,16 @@ public class User {
 		if (getClass() != obj.getClass())
 			return false;
 		User other = (User) obj;
-		return id == other.id && Objects.equals(password, other.password) && roles == other.roles
-				&& Objects.equals(username, other.username);
+		return id == other.id && Objects.equals(password, other.password) && Objects.equals(username, other.username);
 	}
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", username=" + username + ", password=" + password + ", roles=" + roles + "]";
+		return "User [id=" + id + ", username=" + username + ", password=" + password + "]";
 	}
 
 
-
+	
+	
+	
 }
