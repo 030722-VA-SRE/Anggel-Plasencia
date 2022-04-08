@@ -4,8 +4,10 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.revature.exceptions.ComicNotFoundException;
+import com.revature.exceptions.UserExistsException;
 import com.revature.models.Comics;
 import com.revature.repositories.ComicRepository;
 
@@ -34,38 +36,55 @@ public class ComicService {
 		return cr.getComicById(id);
 	}
 
-//	@Transactional
-//	public User createUser(User user){
-//
-//		User usr = ur.findByUsername(user.getUsername());
-//		if (usr == null) {
-//			
-//			throw new UserExistsException();
-//			
-//		}
-//
-//		return ur.save(user);
-//	}
-//	
-//	
-//	@Transactional
-//	public User updateUser(int id, User user){
-//
-//		User u = ur.findById(id).orElseThrow(UserNotFoundException:: new);
-//		
-//		user.setId(u.getId());
-//		
-//		return ur.save(user);
-//	}
-//	
-//	
-//	@Transactional
-//	public void deleteUser(int id) throws UserNotFoundException{
-//
-//		ur.getById(id);
-//		
-//		ur.deleteById(id);
-//
-//	}
+	@Transactional
+	public Comics createComic(Comics comic){
+
+		return cr.save(comic);
+		
+	}
+	
+	
+	@Transactional
+	public Comics updateUser(int id, Comics comic){
+
+		Comics c = cr.findById(id).orElseThrow(ComicNotFoundException:: new);
+		
+		c.setId(c.getId());
+		
+		return cr.save(comic);
+	}
+	
+	
+	@Transactional
+	public void deleteUser(int id) throws ComicNotFoundException{
+
+		cr.getById(id);
+		
+		cr.deleteById(id);
+
+	}
+	
+	public List<Comics> getCardsByName(String name) throws ComicNotFoundException{
+		
+		return cr.getComicByName(name);
+	}
+	
+	
+	public List<Comics> getComicByGenre(String genre) throws ComicNotFoundException{
+		
+		return cr.getComicByGenre(genre);
+	}
+	
+	
+	
+	
+	public List<Comics> getComicByType(String type) throws ComicNotFoundException{
+		return cr.getComicByType(type);
+	}
+	
+	
+	
+	
+	
 
 }

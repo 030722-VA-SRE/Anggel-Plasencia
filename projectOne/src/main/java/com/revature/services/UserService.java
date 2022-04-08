@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,11 +39,19 @@ public class UserService {
 		return uDTO;
 
 	}
+	
+//	public List<UserDTO> getUsersByRole(UserRoles roles){
+//		List<User> usr = ur.findUsersByRole(roles);
+//		
+//		List<UserDTO> roleDTO = usr.stream().map((user) -> new UserDTO(user)).collect(Collectors.toList());
+//		return roleDTO;
+//	}
 
-	public UserDTO getUserById(int id) {
+	public UserDTO getUserById(int id) throws UserNotFoundException {
 
 		User user = ur.findById(id).orElseThrow(UserNotFoundException::new);
 
+		LOG.info(MDC.get("Token"));
 		return new UserDTO(user);
 	}
 

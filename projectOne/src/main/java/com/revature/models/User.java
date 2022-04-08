@@ -38,6 +38,7 @@ public class User {
 		super();
 		this.username = username;
 		this.password = password;
+		this.roles = UserRoles.CUSTOMER;
 	}
 
 	public int getId() {
