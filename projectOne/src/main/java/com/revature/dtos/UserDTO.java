@@ -9,7 +9,7 @@ public class UserDTO {
 
 	private int id;
 	private String username;
-	private UserRoles role;
+	private UserRoles roles;
 	
 	public UserDTO() {
 		super();
@@ -21,6 +21,7 @@ public class UserDTO {
 		super();
 		id = user.getId();
 		username = user.getUsername();
+		roles = user.getRoles();
 		
 	}
 
@@ -45,18 +46,18 @@ public class UserDTO {
 	}
 
 	
-	public UserRoles getRole() {
-		return role;
+	public UserRoles getRoles() {
+		return roles;
 	}
 
-	public void setRole(UserRoles role) {
-		this.role = role;
+	public void setRoles(UserRoles role) {
+		this.roles = role;
 	}
 
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, role, username);
+		return Objects.hash(id, roles, username);
 	}
 
 
@@ -69,15 +70,16 @@ public class UserDTO {
 		if (getClass() != obj.getClass())
 			return false;
 		UserDTO other = (UserDTO) obj;
-		return id == other.id && role == other.role && Objects.equals(username, other.username);
+		return id == other.id && roles == other.roles && Objects.equals(username, other.username);
 	}
 
 
 	@Override
 	public String toString() {
-		return "UserDTO [id=" + id + ", username=" + username + ", role=" + role + "]";
+		return "UserDTO [id=" + id + ", username=" + username + ", roles=" + roles + "]";
 	}
-	
+
+
 
 	
 }

@@ -1,5 +1,8 @@
-package com.revature.controllers;
+ package com.revature.controllers;
 
+import java.sql.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import org.jboss.logging.MDC;
@@ -14,46 +17,68 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.revature.dtos.UserDTO;
 import com.revature.models.User;
+import com.revature.repositories.UserRepository;
 import com.revature.services.AuthService;
+
+import io.jsonwebtoken.JwtBuilder;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
 
 	private AuthService as;
+	private UserRepository ur;
 	private static final Logger LOG = LoggerFactory.getLogger(AuthController.class);
 
 	@Autowired
-	public AuthController(AuthService as) {
+	public AuthController(AuthService as, UserRepository ur) {
 		super();
 		this.as = as;
+		this.ur = ur;
+	}
+	
+	@PostMapping("/register")
+	public ResponseEntity<String> register(@RequestParam(name="username")String username, @RequestParam(name="password")String password){
+		MDC.put("requestId", UUID.randomUUID().toString());
+		String token = as.userReg(new User(username,password));
+		
+		// sets authorization header
+		HttpHeaders hh = new HttpHeaders();
+		hh.set("Authorization", token);
+		
+		LOG.info(username +" successfully registered.");
+		
+		return new ResponseEntity<>("Registration successful.",hh,HttpStatus.OK);
 	}
 	
 	
+	
 	@PostMapping("/login")
-	public ResponseEntity<String> login(@RequestParam(name = "username") String username,
+	public ResponseEntity<String> userLogin(@RequestParam(name = "username") String username,
 			@RequestParam(name = "password") String password) {
-		/*
-		 * Generated a request id for new requests to be handled, this id can be
-		 * attached to logs to show the flow of the request through the application
-		 */
+		
+		
 		MDC.put("requestId", UUID.randomUUID().toString());
 		LOG.debug("Logging in...");
-		// if creds are correct then generate a token
-		 String token = as.login(username, password);
 		
-		// setting headers to be returned to the front end
+		 String token = as.userLogin(username, password);
+		
+	
 		HttpHeaders hh = new HttpHeaders();
 
 		hh.set("Authorization", token);
 
+		LOG.info("User: " + username + "Login Successful!");
 		
-		LOG.info("User: " + username + "Login Successful");
-		// constructor for response entity(body, headers, status)
-		return new ResponseEntity<>("Login Successful.", hh, HttpStatus.OK);
+		return new ResponseEntity<>("Login Successful!", hh, HttpStatus.OK);
 
-	}
+	}//end of login
+	
+	
+	
+	
 
-}
+}//end of class

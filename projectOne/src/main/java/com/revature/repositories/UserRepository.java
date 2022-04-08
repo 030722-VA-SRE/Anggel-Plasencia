@@ -13,7 +13,7 @@ import com.revature.models.UserRoles;
 public interface UserRepository extends JpaRepository<User, Integer>{
 
 	public User findByUsername(String username);
-	public List<User>findUsersByRole(UserRoles role);
+//	public List<User>findUsersByRole(UserRoles roles);
 
 	
 	
